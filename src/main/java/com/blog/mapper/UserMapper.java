@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//记得@mapper
+//@mapper
 @Repository
 @Mapper
 public interface UserMapper {
