@@ -20,7 +20,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     public void addViewControllers(ViewControllerRegistry registry) {
         /*registry.addViewController("/main.html").setViewName("admin/adindex");*/
-        registry.addViewController("/login.html").setViewName("login");
+        registry.addViewController("/template/login.html").setViewName("login");
         registry.addViewController("/").setViewName("login");
         registry.addViewController("/register.html").setViewName("register");
         registry.addViewController("/index.html").setViewName("redirect:toUserIndex");
@@ -55,7 +55,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginHandlerInterceptor())
                 .addPathPatterns("/**").excludePathPatterns("/css/**", "/font-awesome/**",
                 "/fonts/**", "/images/**", "/img/**", "/js/**", "/layui/**", "/lib/**",
-                "/", "/login", "/register", "/login.html", "/main.html", "/register.html",
+                "/", "/login", "/register", "/template/login.html", "/main.html", "/register.html",
                 "/userIndex.html", "/toUserIndex","/detail/**", "/submitComment", "/reply/**", "write.html",
                 "/personal.html", "/index.html", "/toArticle", "/article.html", "/category/**",
                 "/article/selectSubmit", "/**/lastPage", "/**/nextPage", "/**/toWhichPage/**",
