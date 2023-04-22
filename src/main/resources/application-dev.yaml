@@ -36,7 +36,7 @@ spring:
 
 #别名
 mybatis:
-  type-aliases-package: com.chen.pojo
+  type-aliases-package: com.blog.pojo
   configuration:
     #下划线转驼峰
     map-underscore-to-camel-case: true
