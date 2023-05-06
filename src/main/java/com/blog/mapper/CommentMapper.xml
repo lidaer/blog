@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blog.mapper.CommentMapper">
+
+   <select id="getCommentListByTopicId" resultType="Comment">
+       select * from comment where comment_topic_id = #{topicId}
+    <if test="floor == 0">
+        and reply = 0 order by floor;
+    </if>
+    <if test="floor != 0">
+        and reply != 0 and floor = #{floor} order by child_floor;
+    </if>
+   </select>
+
+
+    <resultMap id="commentAddName" type="Comment">
+        <id property="id" column="id"></id>
+        <result property="content" column="content"></result>
+        <result property="contentTime" column="content_time"></result>
+        <association property="author" javaType="User">
+            <result property="username" column="username"></result>
+        </association>
+        <association property="topic" javaType="Topic">
+            <result property="title" column="title"></result>
+        </association>
+    </resultMap>
+    <select id="getCommentList" resultMap="commentAddName">
+        select comment.*, user.username, topic.title from comment, user, topic where
+        comment.comment_user_id = user.id and comment.comment_topic_id = topic.id;
+    </select>
+
+    <select id="getCommentByWhichCount" resultType="int">
+        select count(*) from comment, user, topic
+        <where>
+            <if test="message == 'id'">
+                comment.id = #{selectMessage}
+                and comment_topic_id = topic.id
+                and comment.comment_user_id = user.id;
+            </if>
+            <if test="message == 'comment'">
+                comment.content like concat('%',#{selectMessage},'%');
+                and comment_topic_id = topic.id
+                and comment.comment_user_id = user.id;
+            </if>
+            <if test="message == 'username'">
+                user.username like concat('%',#{selectMessage},'%')
+                and comment_topic_id = topic.id
+                and comment.comment_user_id = user.id;
+            </if>
+            <if test="message == 'title'">
+                topic.title like concat('%',#{selectMessage},'%')
+                and comment_topic_id = topic.id
+                and comment.comment_user_id = user.id;
+            </if>
+        </where>
+    </select>
+
+    <select id="getCommentByWhich" resultMap="commentAddName">
+        select comment.*, user.username, topic.title from comment, user, topic
+        <where>
+            <if test="message == 'id'">
+                comment.id = #{selectMessage}
+                and comment_topic_id = topic.id
+                and comment.comment_user_id = user.id;
+            </if>
+            <if test="message == 'comment'">
+                comment.content like concat('%',#{selectMessage},'%');
+                and comment_topic_id = topic.id
+                and comment.comment_user_id = user.id;
+            </if>
+            <if test="message == 'username'">
+                user.username like concat('%',#{selectMessage},'%')
+                and comment_topic_id = topic.id
+                and comment.comment_user_id = user.id;
+            </if>
+            <if test="message == 'title'">
+                topic.title like concat('%',#{selectMessage},'%')
+                and comment_topic_id = topic.id
+                and comment.comment_user_id = user.id;
+            </if>
+        </where>
+    </select>
+
+    <select id="getTotalCommentCount" resultType="int">
+        select count(*) from comment;
+    </select>
+
+    <delete id="deleteComment" parameterType="int">
+        delete from comment where id = #{id}
+    </delete>
+
+    <select id="getUserById" parameterType="int" resultType="User">
+        select * from comment where comment_user_id = #{id};
+    </select>
+
+    <select id="getMaxParentCommentFloor" resultType="int">
+        select COALESCE(max(floor), 0) from comment where comment_topic_id = #{commentTopicId};
+    </select>
+
+    <select id="getMaxChildCommentFloor" resultType="int">
+        select max(child_floor) from comment where comment_topic_id = #{commentTopicId} and floor = #{parentFloor};
+    </select>
+
+    <insert id="insertComment" parameterType="Comment">
+        insert into comment (content, comment_user_id, comment_topic_id, comment_time, floor, reply, child_floor)
+        values (#{content}, #{commentUserId}, #{commentTopicId}, #{commentTime}, #{floor}, #{reply}, #{childFloor})
+    </insert>
+
+    <update id="updateSupportCount">
+        update comment set support_count = support_count + #{count} where id = #{commentId};
+    </update>
+
+    <select id="getCommentById" parameterType="int" resultType="Comment">
+        select * from comment where id = #{id};
+    </select>
+
+    <select id="getUserIdByCommentId" parameterType="int" resultType="int">
+        select user.id from user, comment where comment.id = #{commentId} and comment.comment_user_id = user.id;
+    </select>
+</mapper>
