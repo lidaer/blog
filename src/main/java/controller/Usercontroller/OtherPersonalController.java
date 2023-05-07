@@ -6,6 +6,8 @@ import com.blog.MyUtils.CutPage;
 import com.blog.MyUtils.CutPageIntegration;
 import com.blog.config.MyStaticProperties;
 import com.blog.pojo.Topic;
+import com.blog.pojo.User;
+import com.blog.service.adminService.AppraiseServise;
 import com.blog.service.adminService.TopicService;
 import com.blog.service.adminService.UserService;
 import lombok.Getter;
