@@ -1,8 +1,8 @@
 package com.blog.MyUtils;
 
-import com.chen.Service.adminService.TopicService;
-import com.chen.config.MyStaticProperties;
-import com.chen.pojo.User;
+import com.blog.config.MyStaticProperties;
+import com.blog.pojo.User;
+import com.blog.service.adminService.TopicService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
