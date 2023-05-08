@@ -3,6 +3,7 @@ package controller.Usercontroller;
 
 import com.blog.MyUtils.NotificationUtil;
 import com.blog.pojo.User;
+import com.blog.service.adminService.NotificationService;
 import com.blog.service.adminService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
